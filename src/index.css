@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+@import "tailwindcss";
+
+@layer base {
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Nunito Sans", sans-serif;
+    }
+
+    body {
+        @apply bg-slate-200 text-black;
+    }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #888;
+    }
+}
+
+@layer components {
+    .container-rest {
+        @apply max-w-[95%] mx-auto;
+    }
+
+    .flex-item-row {
+        @apply flex flex-row items-center;
+    }
+
+    .flex-item-col {
+        @apply flex flex-col items-center;
+    }
+
+    .logo h1 {
+        @apply font-bold text-4xl;
+    }
+}
