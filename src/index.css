@@ -1,50 +1,111 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
 @import "tailwindcss";
+@config "../tailwind.config.ts";
 
 @layer base {
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Nunito Sans", sans-serif;
-    }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-    body {
-        @apply bg-slate-200 text-black;
-    }
+  :root {
+    --primary-color: #a855f7;
+    --secondary-color: #0f172a;
+    --success-color: #22c55e;
+    --danger-color: #ef4444;
+    --warning-color: #eab308;
+  }
 
-    ::-webkit-scrollbar {
-        width: 10px;
-    }
+  body {
+    font-family: "Nunito Sans", sans-serif;
+    @apply bg-slate-200 text-black;
+  }
 
-    ::-webkit-scrollbar-track {
-        background: #f1f1f1;
-    }
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
 
-    ::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 10px;
-    }
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
 
-    ::-webkit-scrollbar-thumb:hover {
-        background: #888;
-    }
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #888;
+  }
 }
 
 @layer components {
-    .container-rest {
-        @apply max-w-[95%] mx-auto;
-    }
+  .container-rest {
+    @apply max-w-[95%] mx-auto;
+  }
 
-    .flex-item-row {
-        @apply flex flex-row items-center;
-    }
+  .flex-item-row-default {
+    @apply flex flex-row items-center justify-start;
+  }
 
-    .flex-item-col {
-        @apply flex flex-col items-center;
-    }
+  .flex-item-row-distance {
+    @apply flex flex-row items-center justify-between;
+  }
 
-    .logo h1 {
-        @apply font-bold text-4xl;
-    }
+  .flex-item-col-default {
+    @apply flex flex-col items-center justify-start;
+  }
+  .flex-item-col-distance {
+    @apply flex flex-col items-center justify-between;
+  }
+
+  .logo h1 {
+    @apply font-bold text-4xl;
+  }
+
+  .cart-badge {
+    @apply absolute -right-3 -top-3 px-2 text-xs bg-primary text-white rounded-full;
+  }
+
+  .nav-links li a {
+    @apply text-base font-light transition-all duration-300 hover:text-primary;
+  }
+
+  .product-card-default {
+    @apply rounded-2xl bg-white py-3;
+  }
+
+  .product-card-default h3 {
+    @apply text-2xl font-semibold mb-2;
+  }
+
+  .product-card-default img {
+    @apply w-52 h-52 object-contain mx-auto;
+  }
+
+  .product-card-default .product-badge {
+    @apply absolute bottom-0 bg-[#663399] text-white w-full uppercase text-center;
+  }
+  .product-card-default .product-card-header {
+    @apply relative mb-6;
+  }
+
+  .product-card-default .product-card-footer {
+    @apply px-3;
+  }
+
+  .product-card-default .product-price {
+    @apply text-2xl font-bold;
+  }
+  .action-icon {
+    @apply text-gray-500 w-7 h-7 transition-transform duration-200 hover:scale-110;
+  }
+
+  .add-cart-btn {
+    @apply px-3 py-2 rounded-md bg-primary text-sm font-semibold text-white cursor-pointer border border-primary;
+  }
+  .view-details-btn {
+    @apply px-3 py-2 rounded-md bg-white text-sm font-semibold  cursor-pointer border border-primary text-primary;
+  }
 }

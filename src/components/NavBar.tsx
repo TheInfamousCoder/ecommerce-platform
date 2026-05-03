@@ -1,27 +1,36 @@
 import { LOGO_TEXT, NAV_LINKS } from "../utils/constants";
+import CartButton from "./ui/CartButton";
+import MenuButton from "./ui/MenuButton";
+import SearchButton from "./ui/SearchButton";
 const NavBar = () => {
   return (
     <header>
       <nav className="bg-white ">
-         <div className="container-rest">
-            <div className="py-4">
-                 <div className="logo">
-                    <h1>{LOGO_TEXT}</h1>
-                 </div>
-                 <div className="links">
-                    <ul>
-                      {NAV_LINKS.map(link => (
-                        <li key={link}><a href="#">{link}</a></li>
-                      ))}
-                    </ul>
-                 </div>
-
-                 
+        <div className="container-rest">
+          <div className="py-4 flex-item-row-distance">
+            <div className="logo">
+              <h1>{LOGO_TEXT}</h1>
             </div>
-         </div>
+            <div className="links">
+              <ul className="flex-item-row-distance gap-8 nav-links">
+                {NAV_LINKS.map((link) => (
+                  <li key={link}>
+                    <a href="#">{link}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="flex-item-row-distance gap-8">
+              <SearchButton />
+              <CartButton />
+              <MenuButton />
+            </div>
+          </div>
+        </div>
       </nav>
     </header>
-  )
-}
+  );
+};
 
 export default NavBar;

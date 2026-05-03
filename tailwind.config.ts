@@ -6,7 +6,15 @@ export default {
     "./src/**/*.{ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: "var(--primary-color)",
+        secondary: "var(--secondary-color)",
+        success: "var(--success-color)",
+        danger: "var(--danger-color)",
+        warning: "var(--warning-color)",
+      },
+    },
   },
   plugins: [],
 } satisfies Config;
