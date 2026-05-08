@@ -1,10 +1,10 @@
 import PageBanner from "../components/PageBanner";
 import ProductCard from "../components/ui/ProductCard";
-import useFetchProducts from "../features/products/useFetchProducts";
+import useFetch from "../features/products/useFetch";
 import type { Product } from "../types/products";
 
 const Products = () => {
-  const { products, loading, error } = useFetchProducts<Product>(
+  const { products, loading, error } = useFetch<Product[]>(
     "https://fakestoreapi.com/products",
   );
 
@@ -19,7 +19,7 @@ const Products = () => {
           <p className="text-center text-gray-600">Fetching products...</p>
         ) : error ? (
           <p className="text-center text-red-500">{error}</p>
-        ) : products.length === 0 ? (
+        ) : !products || products?.length === 0 ? (
           <p>No products found</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

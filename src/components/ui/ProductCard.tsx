@@ -41,7 +41,10 @@ const ProductCard = ({ product }: Props) => {
             <span>{product.rating.count} Reviews</span>
           </div>
           <span className="product-price">₹ {product.price.toFixed(0)}</span>
-          <ProductCartActions onAddToCart={() => addToCart(product)} />
+          <ProductCartActions
+            onAddToCart={() => addToCart(product)}
+            productId={product.id}
+          />
         </div>
         <ProductHoverActions />
       </div>

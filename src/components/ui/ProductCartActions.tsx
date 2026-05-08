@@ -1,8 +1,11 @@
+import { Link } from "react-router-dom";
+
 type Props = {
   onAddToCart: () => void;
+  productId: number;
 };
 
-const ProductCartActions = ({ onAddToCart }: Props) => {
+const ProductCartActions = ({ onAddToCart, productId }: Props) => {
   return (
     <div className="flex-item-row-default gap-3 mt-3">
       <button
@@ -12,12 +15,13 @@ const ProductCartActions = ({ onAddToCart }: Props) => {
       >
         Add To Cart
       </button>
-      <button
+      <Link
+        to={`/products/${productId}`}
         type="button"
         className="view-details-btn hover:bg-primary hover:text-white transition-[background-color,color] duraton-300"
       >
         View Details
-      </button>
+      </Link>
     </div>
   );
 };
