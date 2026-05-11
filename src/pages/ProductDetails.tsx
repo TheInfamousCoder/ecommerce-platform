@@ -3,11 +3,9 @@ import useFetch from "../features/products/useFetch";
 import type { Product } from "../types/products";
 import ProductGallery from "../components/product/ProductGallery";
 import ProductContent from "../components/product/ProductContent";
-import { useCart } from "../hooks/useCart";
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const { addToCart } = useCart();
   const {
     products: product,
     loading,
@@ -33,11 +31,7 @@ const ProductDetails = () => {
           <ProductGallery product={product} />
         </div>
         <div>
-          <ProductContent
-            product={product}
-            productId={id}
-            onAddToCart={addToCart}
-          />
+          <ProductContent product={product} />
         </div>
       </div>
     </div>
