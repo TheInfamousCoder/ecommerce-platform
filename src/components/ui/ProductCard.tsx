@@ -28,8 +28,8 @@ const ProductCard = ({ product }: Props) => {
           <h3>
             {fullTitle
               ? product.title
-              : product.title.length > 20
-                ? `${product.title.slice(0, 20)}...`
+              : product.title.length > 25
+                ? `${product.title.slice(0, 25)}...`
                 : product.title}
           </h3>
           <div className="flex-item-row-default gap-1 mb-3">
