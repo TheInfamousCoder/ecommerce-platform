@@ -14,9 +14,9 @@ const CategoryFilter = ({ selectedCategories, setSelectedCategories }) => {
   };
 
   return (
-    <div>
+    <div className="mb-5">
       <div className="bg-white p-8 rounded-2xl">
-        <h3 className="text-2xl font-bold mb-3">Category Filter</h3>
+        <h3 className="text-2xl font-bold mb-3">Filter by Category</h3>
 
         <ul>
           {categories?.map((category) => {
