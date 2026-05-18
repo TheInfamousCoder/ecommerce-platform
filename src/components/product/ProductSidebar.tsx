@@ -1,6 +1,7 @@
 import type { Product } from "../../types/products";
 import CategoryFilter from "./CategoryFilter";
 import PriceFilter from "./PriceFilter";
+import SortFilter, { type SortOption } from "./SortFilter";
 
 type Props = {
   products: Product[];
@@ -8,6 +9,8 @@ type Props = {
   setSelectedCategories: React.Dispatch<React.SetStateAction<string[]>>;
   priceRange: [number, number];
   setPriceRange: React.Dispatch<React.SetStateAction<[number, number]>>;
+  value: SortOption;
+  onValueChange: (value: SortOption) => void;
 };
 
 const ProductSidebar = ({
@@ -16,6 +19,8 @@ const ProductSidebar = ({
   setSelectedCategories,
   priceRange,
   setPriceRange,
+  value,
+  onValueChange,
 }: Props) => {
   return (
     <div>
@@ -28,6 +33,7 @@ const ProductSidebar = ({
         priceRange={priceRange}
         setPriceRange={setPriceRange}
       />
+      <SortFilter value={value} onValueChange={onValueChange} />
     </div>
   );
 };

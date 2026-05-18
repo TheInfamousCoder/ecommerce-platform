@@ -4,15 +4,18 @@ import ProductSidebar from "../components/product/ProductSidebar";
 import ProductCard from "../components/ui/ProductCard";
 import useFetch from "../features/products/useFetch";
 import type { Product } from "../types/products";
+import type { SortOption } from "../components/product/SortFilter";
 
 const Products = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
+  const [sortBy, setSortBy] = useState<SortOption>("featured");
 
   const { products, loading, error } = useFetch<Product[]>(
     "https://fakestoreapi.com/products",
   );
 
+  //filter-products
   const filteredProducts = !products
     ? []
     : products.filter((product) => {
@@ -26,7 +29,26 @@ const Products = () => {
         return matchesCategory && matchesPrice;
       });
 
-  console.log(filteredProducts);
+  //sort-products
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    switch (sortBy) {
+      case "price-low-high":
+        return a.price - b.price;
+
+      case "price-high-low":
+        return b.price - a.price;
+
+      case "name-ascending":
+        return a.title.localeCompare(b.title);
+
+      case "name-descending":
+        return b.title.localeCompare(a.title);
+
+      case "featured":
+      default:
+        return 0;
+    }
+  });
 
   return (
     <div>
@@ -42,6 +64,8 @@ const Products = () => {
             setSelectedCategories={setSelectedCategories}
             priceRange={priceRange}
             setPriceRange={setPriceRange}
+            value={sortBy}
+            onValueChange={setSortBy}
           />
         </div>
 
@@ -50,7 +74,7 @@ const Products = () => {
             <p className="text-center text-gray-600">Fetching products...</p>
           ) : error ? (
             <p className="text-center text-red-500">{error}</p>
-          ) : !filteredProducts || filteredProducts?.length === 0 ? (
+          ) : !sortedProducts || sortedProducts?.length === 0 ? (
             <p>No products found</p>
           ) : (
             <>
@@ -69,12 +93,12 @@ const Products = () => {
                 <p className="text-primary text-xl">
                   Items
                   <span className="text-neutral-500">
-                    ({filteredProducts.length})
+                    ({sortedProducts.length})
                   </span>
                 </p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {filteredProducts?.map((product) => (
+                {sortedProducts?.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}
               </div>

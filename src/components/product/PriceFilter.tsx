@@ -25,10 +25,9 @@ const PriceFilter = ({ products, priceRange, setPriceRange }: Props) => {
   }
 
   return (
-    <div>
+    <div className="mb-5">
       <div className="bg-white p-8 rounded-2xl">
         <h3 className="text-2xl font-bold mb-3">Filter by Price</h3>
-
         <div className="flex gap-1 items-center">
           <p>{priceRange[0]}</p>
           <Slider.Root
