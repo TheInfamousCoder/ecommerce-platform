@@ -25,6 +25,7 @@ const ProductSidebar = ({
   return (
     <div>
       <CategoryFilter
+        products={products}
         selectedCategories={selectedCategories}
         setSelectedCategories={setSelectedCategories}
       />

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const useFetch = <T,>(url: string) => {
   const [data, setData] = useState<T | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   type RetryOptions = {

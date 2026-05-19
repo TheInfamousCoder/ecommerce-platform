@@ -5,6 +5,7 @@ import ProductCard from "../components/ui/ProductCard";
 import useFetch from "../features/products/useFetch";
 import type { Product } from "../types/products";
 import type { SortOption } from "../components/product/SortFilter";
+import ProductCardSkeleton from "../components/ui/ProductCardSkeleton";
 
 const Products = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -69,9 +70,13 @@ const Products = () => {
           />
         </div>
 
-        <div className="">
+        <div>
           {loading ? (
-            <p className="text-center text-gray-600">Fetching products...</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {Array.from({ length: 8 }).map((_, idx) => (
+                <ProductCardSkeleton key={idx} />
+              ))}
+            </div>
           ) : error ? (
             <p className="text-center text-red-500">{error}</p>
           ) : !sortedProducts || sortedProducts?.length === 0 ? (
