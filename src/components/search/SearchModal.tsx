@@ -1,12 +1,32 @@
 import { Search, X } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import useFetch from "../../features/products/useFetch";
+import type { Product } from "../../types/products";
+import ProductCard from "../ui/ProductCard";
+import ProductCardSkeleton from "../ui/ProductCardSkeleton";
+import Fuse from "fuse.js";
 
 type Props = {
   disposeModal: () => void;
 };
 
 const SearchModal = ({ disposeModal }: Props) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const { products, loading, error } = useFetch<Product[]>(
+    "https://fakestoreapi.com/products",
+  );
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchTerm);
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [searchTerm]);
 
   useEffect(() => {
     const onKeyDispose = (e: KeyboardEvent) => {
@@ -30,6 +50,17 @@ const SearchModal = ({ disposeModal }: Props) => {
     };
   }, [disposeModal]);
 
+  const fuse = useMemo(() => {
+    return new Fuse(products ?? [], {
+      keys: ["title", "category", "description"],
+      threshold: 0.3,
+    });
+  }, [products]);
+
+  const searchResults = !debouncedSearch.trim()
+    ? []
+    : fuse.search(debouncedSearch).map((result) => result.item);
+
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/40 backdrop-blur-sm">
       <div className="relative w-[90%] lg:max-w-4xl  bg-white rounded-2xl py-12 px-5 mt-30 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
@@ -42,6 +73,8 @@ const SearchModal = ({ disposeModal }: Props) => {
               id="search"
               placeholder="Search products"
               className="border border-neutral-300 w-full rounded-md pe-2 ps-12 py-3 outline-none focus:border-primary"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
 
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
@@ -56,7 +89,31 @@ const SearchModal = ({ disposeModal }: Props) => {
           </button>
         </form>
 
-        <div></div>
+        <div className="max-h-[450px] overflow-y-scroll">
+          {loading ? (
+            <div className="grid grid-cols-3 gap-3">
+              {Array.from({ length: 6 }).map((_, idx) => (
+                <ProductCardSkeleton key={idx} />
+              ))}
+            </div>
+          ) : error ? (
+            <p className="text-center text-red-500">{error}</p>
+          ) : !debouncedSearch.trim() ? (
+            <p className="text-center text-neutral-500 py-8">
+              Start typing to search products...
+            </p>
+          ) : searchResults.length === 0 ? (
+            <p className="text-center text-neutral-500 py-8">
+              No products found.
+            </p>
+          ) : (
+            <div className="grid grid-cols-3 gap-3">
+              {searchResults.map((searchResult) => (
+                <ProductCard key={searchResult.id} product={searchResult} />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
