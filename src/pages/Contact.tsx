@@ -12,7 +12,6 @@ const inputClass =
   "w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-[#a855f7] focus:ring-2 focus:ring-[#a855f7]/15";
 
 const Contact = () => {
-  const [phone, setPhone] = useState("");
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -32,6 +31,78 @@ const Contact = () => {
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
   >("idle");
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  //form-validation
+  const validateForm = () => {
+    const newErrors = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      message: "",
+    };
+
+    const phoneDigits = formData.phone.replace(/\D/g, "");
+
+    if (formData.firstName.trim().length < 2) {
+      newErrors.firstName = "First name is too short";
+    }
+
+    if (formData.lastName.trim().length < 2) {
+      newErrors.lastName = "Last name is too short";
+    }
+
+    if (phoneDigits.length < 12) {
+      newErrors.phone = "Phone number is invalid";
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Invalid email address";
+    }
+
+    if (formData.message.trim().length < 10) {
+      newErrors.message = "Message must be at least 10 characters";
+    }
+
+    setErrors(newErrors);
+
+    return Object.values(newErrors).every((error) => error === "");
+  };
+
+  //form-submission-logic
+  const handleSubmit = async (e: React.SubmitEvent) => {
+    e.preventDefault();
+    const isValid = validateForm();
+    if (!isValid) return;
+    try {
+      setIsSubmitting(true);
+      console.log(formData);
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      setSubmitStatus("success");
+      setFormData({
+        firstName: "",
+        lastName: "",
+        phone: "",
+        email: "",
+        message: "",
+      });
+    } catch (error) {
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <main>
@@ -53,7 +124,7 @@ const Contact = () => {
                   You can reach us anytime
                 </p>
 
-                <form className="mt-6 space-y-4" noValidate>
+                <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div>
                       <label htmlFor="first-name" className="sr-only">
@@ -63,10 +134,17 @@ const Contact = () => {
                         id="first-name"
                         type="text"
                         name="firstName"
+                        value={formData.firstName}
                         placeholder="First name"
                         className={inputClass}
+                        onChange={handleChange}
                       />
                     </div>
+                    {errors.firstName && (
+                      <p className="text-sm text-red-500 mt-1">
+                        {errors.firstName}
+                      </p>
+                    )}
                     <div>
                       <label htmlFor="last-name" className="sr-only">
                         Last name
@@ -76,9 +154,16 @@ const Contact = () => {
                         type="text"
                         name="lastName"
                         placeholder="Last name"
+                        value={formData.lastName}
                         className={inputClass}
+                        onChange={handleChange}
                       />
                     </div>
+                    {errors.lastName && (
+                      <p className="text-sm text-red-500 mt-1">
+                        {errors.lastName}
+                      </p>
+                    )}
                   </div>
 
                   <div>
@@ -86,8 +171,14 @@ const Contact = () => {
                       placeholder="Enter you phone number"
                       inputClassName="w-full !rounded-r-md border !border-gray-200  !h-11  outline-none focus-within:!border-primary z-100"
                       defaultCountry="in"
-                      value={phone}
-                      onChange={(phone) => setPhone(phone)}
+                      name="phone"
+                      value={formData.phone}
+                      onChange={(phone) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          phone,
+                        }))
+                      }
                       countrySelectorStyleProps={{
                         buttonClassName: `
                         !rounded-l-md
@@ -105,6 +196,9 @@ const Contact = () => {
                       }}
                     />
                   </div>
+                  {errors.phone && (
+                    <p className="text-sm text-red-500 mt-1">{errors.phone}</p>
+                  )}
 
                   <div className="relative">
                     <label htmlFor="email" className="sr-only">
@@ -118,10 +212,15 @@ const Contact = () => {
                       id="email"
                       type="email"
                       name="email"
+                      value={formData.email}
+                      onChange={handleChange}
                       placeholder="Your email"
                       className={`${inputClass} pl-10`}
                     />
                   </div>
+                  {errors.email && (
+                    <p className="text-sm text-red-500 mt-1">{errors.email}</p>
+                  )}
 
                   <div className="relative">
                     <label htmlFor="message" className="sr-only">
@@ -133,19 +232,27 @@ const Contact = () => {
                       rows={4}
                       maxLength={120}
                       placeholder="How can we help?"
+                      value={formData.message}
                       className={`${inputClass} resize-none pb-8`}
+                      onChange={handleChange}
                     />
                     <span className="pointer-events-none absolute bottom-3 right-3 text-xs text-gray-400">
                       0/120
                     </span>
                   </div>
+                  {errors.message && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {errors.message}
+                    </p>
+                  )}
 
                   <button
                     type="submit"
                     className="w-full rounded-lg py-3.5 text-sm font-semibold text-white transition hover:opacity-95 cursor-pointer"
+                    disabled={isSubmitting}
                     style={{ backgroundColor: CONTACT_PURP }}
                   >
-                    Submit
+                    {isSubmitting ? "Sending..." : "Submit"}
                   </button>
 
                   <p className="text-center text-xs leading-relaxed text-gray-500">
@@ -155,8 +262,8 @@ const Contact = () => {
                       className="font-semibold text-gray-700 hover:underline"
                     >
                       Terms of service
-                    </a>{" "}
-                    and{" "}
+                    </a>
+                    and
                     <a
                       href="#"
                       className="font-semibold text-gray-700 hover:underline"
