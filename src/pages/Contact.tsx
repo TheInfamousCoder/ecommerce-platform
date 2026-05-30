@@ -87,7 +87,6 @@ const Contact = () => {
     if (!isValid) return;
     try {
       setIsSubmitting(true);
-      console.log(formData);
       await new Promise((resolve) => setTimeout(resolve, 2000));
       setSubmitStatus("success");
       setFormData({
@@ -97,7 +96,7 @@ const Contact = () => {
         email: "",
         message: "",
       });
-    } catch (error) {
+    } catch {
       setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);

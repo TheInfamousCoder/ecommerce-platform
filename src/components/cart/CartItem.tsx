@@ -13,7 +13,11 @@ const CartItem = ({ item }: Props) => {
     <div className="max-w-2xl">
       <div className="flex gap-3 items-start mb-4 px-3 py-4 bg-white rounded-2xl ">
         <div className="w-32 h-32 border-neutral-200 border p-4 rounded-2xl flex items-center shrink-0">
-          <img src={image} alt={title} className="font-extrabold w-full" />
+          <img
+            src={image}
+            alt={title}
+            className="font-extrabold w-full h-full object-contain"
+          />
         </div>
 
         <div className="w-full">
