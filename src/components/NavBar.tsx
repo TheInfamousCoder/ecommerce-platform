@@ -3,15 +3,10 @@ import { LOGO_TEXT, NAV_LINKS } from "../utils/constants";
 import CartButton from "./ui/CartButton";
 import MenuButton from "./ui/MenuButton";
 import SearchButton from "./ui/SearchButton";
-import useAuth from "../hooks/useAuth";
 type Props = {
   openSearch: () => void;
 };
 const NavBar = ({ openSearch }: Props) => {
-  const { user } = useAuth();
-
-  console.log(user);
-
   return (
     <header>
       <nav className="bg-white ">

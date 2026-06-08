@@ -8,6 +8,9 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AppLayout from "./layouts/AppLayout";
 import { AuthProvider } from "./context/AuthProvider";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import Profile from "./pages/Profile";
+import Checkout from "./pages/Checkout";
 
 function App() {
   return (
@@ -23,6 +26,22 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/checkout"
+                element={
+                  <ProtectedRoute>
+                    <Checkout />
+                  </ProtectedRoute>
+                }
+              />
             </Route>
           </Routes>
         </BrowserRouter>

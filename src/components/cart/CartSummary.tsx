@@ -1,8 +1,11 @@
+import { Link } from "react-router-dom";
 import { useCart } from "../../hooks/useCart";
 import CartSummaryItem from "./CartSummaryItem";
+import useAuth from "../../hooks/useAuth";
 
 const CartSummary = () => {
   const { cart } = useCart();
+  const { user } = useAuth();
 
   const sgst = 2.5;
   const cgst = 2.5;
@@ -54,12 +57,21 @@ const CartSummary = () => {
       </div>
 
       <div className="w-full mt-4">
-        <button
-          type="button"
-          className="add-cart-btn w-full text-xl uppercase hover:bg-purple-800 transition-colors duration-300"
-        >
-          Checkout
-        </button>
+        {!user ? (
+          <Link
+            to="/login"
+            className="add-cart-btn w-full block text-xl uppercase hover:bg-purple-800 transition-colors duration-300 text-center"
+          >
+            Sign In to Checkout
+          </Link>
+        ) : (
+          <Link
+            to="/checkout"
+            className="add-cart-btn w-full block text-xl uppercase hover:bg-purple-800 transition-colors duration-300 text-center"
+          >
+            Checkout
+          </Link>
+        )}
       </div>
     </>
   );

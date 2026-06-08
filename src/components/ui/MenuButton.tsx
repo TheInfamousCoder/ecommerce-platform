@@ -86,21 +86,15 @@ const MenuButton = () => {
           )}
 
           <div className="p-2">
-            <button
-              type="button"
-              className="menu-dropdown-item cursor-pointer"
-            >
+            <Link to="/profile" className="menu-dropdown-item cursor-pointer">
               <UserCircle2
                 className="menu-dropdown-icon h-4 w-4 shrink-0 text-gray-400 transition-colors duration-200"
                 strokeWidth={1.75}
               />
               My Profile
-            </button>
+            </Link>
 
-            <button
-              type="button"
-              className="menu-dropdown-item cursor-pointer"
-            >
+            <button type="button" className="menu-dropdown-item cursor-pointer">
               <Package
                 className="menu-dropdown-icon h-4 w-4 shrink-0 text-gray-400 transition-colors duration-200"
                 strokeWidth={1.75}
