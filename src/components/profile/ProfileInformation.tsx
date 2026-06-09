@@ -30,45 +30,52 @@ const ProfileInformation = () => {
 
   return (
     <div>
-      <div className="max-w-xl space-y-4">
-        <div>
-          <label>First Name</label>
-          <input
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            className="w-full border rounded-md p-3"
-          />
+      <h2 className="mb-8 text-2xl font-bold">
+        Add or Edit your Personal Information
+      </h2>
+      <div className="w-full space-y-4">
+        <div className="flex gap-5">
+          <div className="w-full">
+            <label>First Name</label>
+            <input
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleChange}
+              className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-[#a855f7] focus:ring-2 focus:ring-[#a855f7]/15"
+            />
+          </div>
+
+          <div className="w-full">
+            <label>Last Name</label>
+            <input
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleChange}
+              className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-[#a855f7] focus:ring-2 focus:ring-[#a855f7]/15"
+            />
+          </div>
         </div>
 
-        <div>
-          <label>Last Name</label>
-          <input
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            className="w-full border rounded-md p-3"
-          />
-        </div>
+        <div className="flex gap-5">
+          <div className="w-full">
+            <label>Email</label>
+            <input
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-[#a855f7] focus:ring-2 focus:ring-[#a855f7]/15"
+            />
+          </div>
 
-        <div>
-          <label>Email</label>
-          <input
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full border rounded-md p-3"
-          />
-        </div>
-
-        <div>
-          <label>Phone</label>
-          <input
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            className="w-full border rounded-md p-3"
-          />
+          <div className="w-full">
+            <label>Phone</label>
+            <input
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-[#a855f7] focus:ring-2 focus:ring-[#a855f7]/15"
+            />
+          </div>
         </div>
 
         <button
